@@ -1,0 +1,39 @@
+version: "3.1"
+
+services:
+  db:
+    image: mysql:5.7.27
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - 4000:3306
+    volumes:
+      - ./mysqldata:/var/lib/mysql:delegated
+
+  myadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      PMA_USER: root
+      PMA_PORT: 3306
+    ports:
+      - 8001:80
+
+  app:
+    image: yiisoftware/yii2-php:7.3-apache
+    volumes:
+      - ./composer/cache:/root/.composer/cache:delegated
+      - ./app:/app:delegated
+    environment:
+      DB_DATABASE: ${MYSQL_DATABASE}
+      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      DB_HOST: db
+      PHP_USER_ID: 1000
+      PHP_ENABLE_XDEBUG: 1
+      #            XDEBUG_CONFIG: remote_host=172.28.0.1 remote_port=9005
+      XDEBUG_CONFIG: remote_connect_back=1 remote_port=9005
+    ports:
+      - 8000:80
+
