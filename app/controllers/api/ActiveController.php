@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\controllers;
+namespace app\controllers\api;
 
 use yii\rest\ActiveController as Controller;
 
