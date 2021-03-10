@@ -2,8 +2,8 @@
 
 namespace app\controllers\api\models;
 
+use app\controllers\api\resources\UserResource;
 use app\models\User;
-use app\modules\api\resources\UserResource;
 use Yii;
 use yii\base\Model;
 
@@ -31,7 +31,7 @@ class RegisterForm extends Model
             [['username', 'password', 'password_repeat'], 'required'],
             ['password', 'compare', 'compareAttribute' => 'password_repeat'],
             ['username', 'unique',
-                'targetClass' => '\app\modules\api\resources\UserResource',
+                'targetClass' => UserResource::class,
                 'message' => 'This username has already been taken.'
             ],
         ];
