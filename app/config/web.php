@@ -64,7 +64,11 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 ['class' => 'yii\rest\UrlRule', 'controller' =>
-                    ['api/tabla']
+                    [
+                        'api/tabla',
+                        'api/user',
+
+                    ]
                 ]
             ],
         ],
